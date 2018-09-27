@@ -1,5 +1,7 @@
 package WebDriver.Bot;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,8 @@ public class SulamericaBot {
 		// String codigo = sc.nextLine();
 		// String codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
 		// "Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		String data = "26092018";
+		String indicacao = "Depressão";
 		String codigo = "59200140006785890107";
 		String codigo1 = codigo.substring(0, 3);
 		String codigo2 = codigo.substring(3, 8);
@@ -81,17 +85,70 @@ public class SulamericaBot {
 		Thread.sleep(3000);
 		driver.findElement(By.id("btn-pesquisar-procedimentos")).click();
 
-		Thread.sleep(3000);
+		Thread.sleep(1000);
 		WebElement table = driver.findElement(By.xpath("//div[@class='tab-procAutorizados']/table"));
-		WebElement procedimento = table.findElement(By.xpath("//tr/td[contains(text(), 'ALICIA DIAS DE OLIVEIRA')]"));
-		procedimento.click();
+		List<WebElement> tr = table.findElements(By.cssSelector("tr"));
+		List<WebElement> td = table.findElements(By.cssSelector("td"));
+		String autorizacao = td.get(0).getText();
+		// System.out.println(autorizacao);
+		// WebElement procedimento =
+		// table.findElement(By.xpath("//tr/td[contains(text(), 'ALICIA DIAS DE
+		// OLIVEIRA')]"));
+		tr.get(1).click();
 
 		if (driver.findElement(By.id("selectTipoGuia")).isDisplayed()) {
-			Select dropdown = new Select(driver.findElement(By.id("selectTipoGuia")));
-			dropdown.selectByVisibleText("SADT");
+			Select dropdownGuia = new Select(driver.findElement(By.id("selectTipoGuia")));
+			dropdownGuia.selectByVisibleText("SADT");
 			driver.findElement(By.id("btn-confirmar-pesquisa")).click();
 		}
 
+		// PREENCHE A TELA DO RERENCIADO
+		driver.findElement(By.id("numero-guia-principal")).sendKeys(autorizacao);
+		driver.findElement(By.id("numero-profissional-operadora")).sendKeys("00035000SPP0");
+		driver.findElement(By.id("nome-contratado-solicitante")).sendKeys("JANETE ESPOSITO");
+		driver.findElement(By.name("guia-sadt.profissional-solicitante.nome")).sendKeys("JANETE ESPOSITO");
+		Select dropdownConselho = new Select(driver.findElement(By.id("conselho-profissional")));
+		dropdownConselho.selectByVisibleText("CRP");
+		Select dropdownUf = new Select(driver.findElement(By.id("uf-conselho-profissional")));
+		dropdownUf.selectByVisibleText("SP");
+		driver.findElement(By.id("numero-registro-conselho")).sendKeys("350003");
+		driver.findElement(By.id("cbo")).sendKeys("251510");
+		Thread.sleep(3000);
+		WebElement autoOptions = driver.findElement(By.id("ui-id-1"));
+
+		List<WebElement> options = autoOptions.findElements(By.tagName("a"));
+		for(WebElement optionToSelect : options){
+	        if(optionToSelect.getText().equals("251510 - PSICOLOGO CLINICO")) {
+	            optionToSelect.click();
+	            break;
+	        }
+		}
+		
+		Select dropdownCarater = new Select(driver.findElement(By.id("carater-atendimento")));
+		dropdownCarater.selectByVisibleText("Eletivo");
+		
+		driver.findElement(By.id("data-solicitacao")).sendKeys(data);
+		
+		Select dropdownRn = new Select(driver.findElement(By.id("flag-atendimento-rn")));
+		dropdownRn.selectByVisibleText("Não");
+		
+		driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao);
+		
+		driver.findElement(By.name("pes.descricao-procedimento")).sendKeys("consulta em");
+		Thread.sleep(3000);
+		WebElement autoOptionsProcedimento = driver.findElement(By.id("ui-id-176"));
+
+		List<WebElement> optionsProcedimento = autoOptionsProcedimento.findElements(By.tagName("a"));
+		for(WebElement optionToSelectProcedimento : optionsProcedimento){
+	        if(optionToSelectProcedimento.getText().equals("CONSULTA EM PSICOLOGIA")) {
+	            optionToSelectProcedimento.click();
+	            break;
+	        }
+		}
+		
+		driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys("10");
+		driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys("10");
+		driver.findElement(By.name("incluiPes")).click();
 		// sc.close();
 	}
 
