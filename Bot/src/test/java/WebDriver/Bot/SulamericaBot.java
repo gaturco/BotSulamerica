@@ -32,7 +32,7 @@ public class SulamericaBot {
 		// String codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
 		// "Sulamerica", JOptionPane.PLAIN_MESSAGE);
 		String data = "26092018";
-		String indicacao = "Depressão";
+		String indicacao = "DEPRESSAO";
 		String codigo = "59200140006785890107";
 		String codigo1 = codigo.substring(0, 3);
 		String codigo2 = codigo.substring(3, 8);
@@ -136,7 +136,7 @@ public class SulamericaBot {
 		
 		driver.findElement(By.name("pes.descricao-procedimento")).sendKeys("consulta em");
 		Thread.sleep(3000);
-		WebElement autoOptionsProcedimento = driver.findElement(By.id("ui-id-176"));
+		WebElement autoOptionsProcedimento = driver.findElement(By.id("ui-id-3"));
 
 		List<WebElement> optionsProcedimento = autoOptionsProcedimento.findElements(By.tagName("a"));
 		for(WebElement optionToSelectProcedimento : optionsProcedimento){
@@ -146,9 +146,9 @@ public class SulamericaBot {
 	        }
 		}
 		
-		driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys("10");
-		driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys("10");
-		driver.findElement(By.name("incluiPes")).click();
+		driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys("6");
+		driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys("6");
+		driver.findElement(By.id("incluiPes")).click();
 		// sc.close();
 	}
 
