@@ -19,7 +19,7 @@ public class SulamericaBot {
 
 	@Before
 	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "C:/chromedriver_win32/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:/Users/Gabriel Turco/chromedriver.exe");
 
 		driver = new ChromeDriver();
 	}
