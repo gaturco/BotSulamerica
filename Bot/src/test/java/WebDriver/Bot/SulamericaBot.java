@@ -1,5 +1,5 @@
-package WebDriver.Bot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -19,31 +19,30 @@ public class SulamericaBot {
 
 	@Before
 	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "C:/Users/Gabriel Turco/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:/Users/gusta/chromedriver.exe");
 
 		driver = new ChromeDriver();
+
 	}
 
 	@Test
 	public void browser() throws Exception {
-		// Scanner sc = new Scanner(System.in);
-		// System.out.println("Codigo do paciente: ");
-		// String codigo = sc.nextLine();
-		// String codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
-		// "Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		int tamanho;
+		String codigo = "58200680006415900104";
+//		do { 
+//			codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
+//			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+//			tamanho = codigo.length();
+//		} while (tamanho!= 20);
 		String data = "26092018";
-		String indicacao = "DEPRESSAO";
-		String codigo = "59200140006785890107";
+//		String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
+//		"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		String indicacao = "depressao";
 		String codigo1 = codigo.substring(0, 3);
 		String codigo2 = codigo.substring(3, 8);
 		String codigo3 = codigo.substring(8, 12);
 		String codigo4 = codigo.substring(12, 16);
 		String codigo5 = codigo.substring(16, 20);
-		// System.out.println(codigo1);
-		// System.out.println(codigo2);
-		// System.out.println(codigo3);
-		// System.out.println(codigo4);
-		// System.out.println(codigo5);
 
 		int time = 10;
 		WebDriverWait wait = new WebDriverWait(driver, time);
@@ -90,10 +89,6 @@ public class SulamericaBot {
 		List<WebElement> tr = table.findElements(By.cssSelector("tr"));
 		List<WebElement> td = table.findElements(By.cssSelector("td"));
 		String autorizacao = td.get(0).getText();
-		// System.out.println(autorizacao);
-		// WebElement procedimento =
-		// table.findElement(By.xpath("//tr/td[contains(text(), 'ALICIA DIAS DE
-		// OLIVEIRA')]"));
 		tr.get(1).click();
 
 		if (driver.findElement(By.id("selectTipoGuia")).isDisplayed()) {
@@ -102,7 +97,7 @@ public class SulamericaBot {
 			driver.findElement(By.id("btn-confirmar-pesquisa")).click();
 		}
 
-		// PREENCHE A TELA DO RERENCIADO
+		// PREENCHE A TELA DO REFERENCIADO
 		driver.findElement(By.id("numero-guia-principal")).sendKeys(autorizacao);
 		driver.findElement(By.id("numero-profissional-operadora")).sendKeys("00035000SPP0");
 		driver.findElement(By.id("nome-contratado-solicitante")).sendKeys("JANETE ESPOSITO");
@@ -117,39 +112,104 @@ public class SulamericaBot {
 		WebElement autoOptions = driver.findElement(By.id("ui-id-1"));
 
 		List<WebElement> options = autoOptions.findElements(By.tagName("a"));
-		for(WebElement optionToSelect : options){
-	        if(optionToSelect.getText().equals("251510 - PSICOLOGO CLINICO")) {
-	            optionToSelect.click();
-	            break;
-	        }
+		for (WebElement optionToSelect : options) {
+			if (optionToSelect.getText().equals("251510 - PSICOLOGO CLINICO")) {
+				optionToSelect.click();
+				break;
+			}
 		}
-		
+
 		Select dropdownCarater = new Select(driver.findElement(By.id("carater-atendimento")));
 		dropdownCarater.selectByVisibleText("Eletivo");
-		
+
 		driver.findElement(By.id("data-solicitacao")).sendKeys(data);
-		
+
 		Select dropdownRn = new Select(driver.findElement(By.id("flag-atendimento-rn")));
 		dropdownRn.selectByVisibleText("Não");
-		
-		driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao);
-		
+
+		driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao.toUpperCase());
+
 		driver.findElement(By.name("pes.descricao-procedimento")).sendKeys("consulta em");
 		Thread.sleep(3000);
 		WebElement autoOptionsProcedimento = driver.findElement(By.id("ui-id-3"));
 
 		List<WebElement> optionsProcedimento = autoOptionsProcedimento.findElements(By.tagName("a"));
-		for(WebElement optionToSelectProcedimento : optionsProcedimento){
-	        if(optionToSelectProcedimento.getText().equals("CONSULTA EM PSICOLOGIA")) {
-	            optionToSelectProcedimento.click();
-	            break;
-	        }
+		for (WebElement optionToSelectProcedimento : optionsProcedimento) {
+			if (optionToSelectProcedimento.getText().equals("CONSULTA EM PSICOLOGIA")) {
+				optionToSelectProcedimento.click();
+				break;
+			}
 		}
-		
+
 		driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys("6");
 		driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys("6");
 		driver.findElement(By.id("incluiPes")).click();
-		// sc.close();
+
+		driver.findElement(By.className("bt-excluir")).click();
+
+		// DADOS ATENDIMENTO
+		Select dropdownTipoAtendimento = new Select(driver.findElement(By.id("tipo-atendimento")));
+		dropdownTipoAtendimento.selectByVisibleText("Terapias");
+		Select dropdownIndicacaoAcidente = new Select(driver.findElement(By.id("indicador-acidente")));
+		dropdownIndicacaoAcidente.selectByVisibleText("Não Acidente");
+		Select dropdownTipoConsulta = new Select(driver.findElement(By.id("tipo-consulta")));
+		dropdownTipoConsulta.selectByVisibleText("Retorno");
+
+		// PROCEDIMENTOS E EXAMES REALIZADOS 50000462
+		List<String> datas = new ArrayList<String>();
+		datas.add("17102018");
+		datas.add("17102018");
+		datas.add("17102018");
+		datas.add("17102018");
+		datas.add("17102018");
+		datas.add("17102018");
+		datas.add("17102018");
+		String adiciona; 
+		for (int i = 0; i < 6; i++) {
+			driver.findElement(By.name("per.data")).sendKeys(datas.get(i));
+			driver.findElement(By.name("per.descricao-procedimento")).sendKeys("consulta em");
+			Thread.sleep(3000);
+			WebElement autoOptionsExame = driver.findElement(By.id("ui-id-14"));
+
+			List<WebElement> optionsExame = autoOptionsExame.findElements(By.tagName("a"));
+			for (WebElement optionToSelectExame : optionsExame) {
+				if (optionToSelectExame.getText().equals("CONSULTA EM PSICOLOGIA")) {
+					optionToSelectExame.click();
+					break;
+				}
+			}
+			driver.findElement(By.name("per.quantidade")).sendKeys("1");
+			driver.findElement(By.name("per.valor-unitario")).sendKeys("5172");
+			driver.findElement(By.id("incluirPer")).click();
+			if (i == 0) {
+				driver.findElement(By.className("bt-excluir-procedimento-realizado")).click();
+			}
+			adiciona = Integer.toString(i+2);
+			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='" + adiciona + "']/td[13]/span")));
+			driver.findElement(By.xpath("//*[@id='" + adiciona + "']/td[13]/span")).click();
+			Select dropdownGrauPart = new Select(driver.findElement(By.name("ipe.grau-participacao")));
+			dropdownGrauPart.selectByVisibleText("Clínico");
+			driver.findElement(By.name("ipe.numero-documento")).sendKeys("00035000SPP0");
+			driver.findElement(By.name("ipe.nome-profissional")).sendKeys("JANETE ESPOSITO");
+			Select dropdownUF = new Select(driver.findElement(By.name("ipe.uf-conselho")));
+			dropdownUF.selectByVisibleText("SP");
+			Select dropdownConselhoProfissional = new Select(driver.findElement(By.name("ipe.conselho-profissional")));
+			dropdownConselhoProfissional.selectByVisibleText("CRP");
+			driver.findElement(By.name("ipe.numero-conselho")).sendKeys("350003");
+			driver.findElement(By.name("ipe.busca-codigo-cbo")).sendKeys("251510");
+			Thread.sleep(3000);
+			WebElement autoOptionsCbo = driver.findElement(By.id("ui-id-25"));
+
+			List<WebElement> optionsCbo = autoOptionsCbo.findElements(By.tagName("a"));
+			for (WebElement optionToSelectCbo : optionsCbo) {
+				if (optionToSelectCbo.getText().equals("251510 - PSICOLOGO CLINICO")) {
+					optionToSelectCbo.click();
+					break;
+				}
+			}
+			driver.findElement(By.id("incluirIpe")).click();
+		}
+		
 	}
 
 	@After
