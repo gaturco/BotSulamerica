@@ -2,13 +2,15 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
+import javax.swing.JOptionPane;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,7 +21,7 @@ public class SulamericaBot {
 
 	@Before
 	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "C:/Users/gusta/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "/chromedriver_win32/chromedriver.exe");
 
 		driver = new ChromeDriver();
 
@@ -27,22 +29,8 @@ public class SulamericaBot {
 
 	@Test
 	public void browser() throws Exception {
-		int tamanho;
-		String codigo = "58200680006415900104";
-//		do { 
-//			codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
-//			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-//			tamanho = codigo.length();
-//		} while (tamanho!= 20);
-		String data = "26092018";
-//		String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
-//		"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-		String indicacao = "depressao";
-		String codigo1 = codigo.substring(0, 3);
-		String codigo2 = codigo.substring(3, 8);
-		String codigo3 = codigo.substring(8, 12);
-		String codigo4 = codigo.substring(12, 16);
-		String codigo5 = codigo.substring(16, 20);
+
+		String codigo;
 
 		int time = 10;
 		WebDriverWait wait = new WebDriverWait(driver, time);
@@ -69,7 +57,18 @@ public class SulamericaBot {
 		driver.findElement(By.linkText("Validar procedimento autorizado")).click();
 
 		// PRENCHE CODIGO DO PACIENTE
-
+//		do { 
+//			
+//			codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
+//			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+//
+//		} while (codigo.length() != 20);
+		codigo = "54588888454738550019"; //codigo teste
+		String codigo1 = codigo.substring(0, 3);
+		String codigo2 = codigo.substring(3, 8);
+		String codigo3 = codigo.substring(8, 12);
+		String codigo4 = codigo.substring(12, 16);
+		String codigo5 = codigo.substring(16, 20);
 		driver.findElement(By.id("codigo-beneficiario-1")).sendKeys(codigo1);
 		driver.findElement(By.id("codigo-beneficiario-2")).sendKeys(codigo2);
 		driver.findElement(By.id("codigo-beneficiario-3")).sendKeys(codigo3);
@@ -122,27 +121,26 @@ public class SulamericaBot {
 		Select dropdownCarater = new Select(driver.findElement(By.id("carater-atendimento")));
 		dropdownCarater.selectByVisibleText("Eletivo");
 
+		String data = driver.findElement(By.name("guia-sadt.data-autorizacao")).getAttribute("value");
+		
 		driver.findElement(By.id("data-solicitacao")).sendKeys(data);
 
 		Select dropdownRn = new Select(driver.findElement(By.id("flag-atendimento-rn")));
 		dropdownRn.selectByVisibleText("Não");
-
+		
+//		String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
+//		"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		String indicacao = "depressao"; //teste indicacao
 		driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao.toUpperCase());
-
-		driver.findElement(By.name("pes.descricao-procedimento")).sendKeys("consulta em");
-		Thread.sleep(3000);
-		WebElement autoOptionsProcedimento = driver.findElement(By.id("ui-id-3"));
-
-		List<WebElement> optionsProcedimento = autoOptionsProcedimento.findElements(By.tagName("a"));
-		for (WebElement optionToSelectProcedimento : optionsProcedimento) {
-			if (optionToSelectProcedimento.getText().equals("CONSULTA EM PSICOLOGIA")) {
-				optionToSelectProcedimento.click();
-				break;
-			}
-		}
-
-		driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys("6");
-		driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys("6");
+		
+		driver.findElement(By.name("pes.codigo-procedimento")).sendKeys("50000462");
+		driver.findElement(By.className("btn-busca-procedimento")).click();
+		
+//		String quantidade = JOptionPane.showInputDialog(null, "Quantidade:",
+//				"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		String quantidade = "6";
+		driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys(quantidade);
+		driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys(quantidade);
 		driver.findElement(By.id("incluiPes")).click();
 
 		driver.findElement(By.className("bt-excluir")).click();
@@ -157,38 +155,43 @@ public class SulamericaBot {
 
 		// PROCEDIMENTOS E EXAMES REALIZADOS 50000462
 		List<String> datas = new ArrayList<String>();
-		datas.add("17102018");
-		datas.add("17102018");
-		datas.add("17102018");
-		datas.add("17102018");
-		datas.add("17102018");
-		datas.add("17102018");
-		datas.add("17102018");
-		String adiciona; 
-		for (int i = 0; i < 6; i++) {
+		int qtde = Integer.parseInt(quantidade);
+		for (int j = 0; j < qtde; j++) {
+			
+			datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
+					"Sulamerica", JOptionPane.PLAIN_MESSAGE));
+//			datas.add("07012019");
+//			datas.add("08012019");
+//			datas.add("09012019");
+//			datas.add("10012019");
+//			datas.add("11012019");
+//			datas.add("12012019");
+		}
+		
+		String adiciona;
+		
+		for (int i = 0; i < qtde; i++) {
 			driver.findElement(By.name("per.data")).sendKeys(datas.get(i));
-			driver.findElement(By.name("per.descricao-procedimento")).sendKeys("consulta em");
-			Thread.sleep(3000);
-			WebElement autoOptionsExame = driver.findElement(By.id("ui-id-14"));
-
-			List<WebElement> optionsExame = autoOptionsExame.findElements(By.tagName("a"));
-			for (WebElement optionToSelectExame : optionsExame) {
-				if (optionToSelectExame.getText().equals("CONSULTA EM PSICOLOGIA")) {
-					optionToSelectExame.click();
-					break;
-				}
-			}
+			driver.findElement(By.xpath("//*[@id=\"formPer\"]/fieldset/div[4]/div[1]/div[1]/input")).sendKeys("50000462");
+			driver.findElement(By.xpath("//*[@id=\"formPer\"]/fieldset/div[4]/div[1]/div[2]/a")).click();
 			driver.findElement(By.name("per.quantidade")).sendKeys("1");
 			driver.findElement(By.name("per.valor-unitario")).sendKeys("5172");
 			driver.findElement(By.id("incluirPer")).click();
 			if (i == 0) {
-				driver.findElement(By.className("bt-excluir-procedimento-realizado")).click();
+				driver.findElement(By.xpath("//*[@id=\"1\"]/td[1]/a")).click();
 			}
 			adiciona = Integer.toString(i+2);
 			wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='" + adiciona + "']/td[13]/span")));
-			driver.findElement(By.xpath("//*[@id='" + adiciona + "']/td[13]/span")).click();
+		    driver.findElement(By.xpath("//*[@id='" + adiciona + "']/td[13]/span")).click();
+			Thread.sleep(750);
+			WebElement mais = driver.findElement(By.xpath("//*[@id='" + adiciona + "']/td[13]/span"));
+			Actions action = new Actions(driver);
+			action.moveToElement(mais).click().build().perform();
+			
 			Select dropdownGrauPart = new Select(driver.findElement(By.name("ipe.grau-participacao")));
 			dropdownGrauPart.selectByVisibleText("Clínico");
+			Select dropdownTipoDoc = new Select(driver.findElement(By.name("ipe.tipo-documento")));
+			dropdownTipoDoc.selectByVisibleText("Código na Operadora");
 			driver.findElement(By.name("ipe.numero-documento")).sendKeys("00035000SPP0");
 			driver.findElement(By.name("ipe.nome-profissional")).sendKeys("JANETE ESPOSITO");
 			Select dropdownUF = new Select(driver.findElement(By.name("ipe.uf-conselho")));
@@ -198,7 +201,7 @@ public class SulamericaBot {
 			driver.findElement(By.name("ipe.numero-conselho")).sendKeys("350003");
 			driver.findElement(By.name("ipe.busca-codigo-cbo")).sendKeys("251510");
 			Thread.sleep(3000);
-			WebElement autoOptionsCbo = driver.findElement(By.id("ui-id-25"));
+			WebElement autoOptionsCbo = driver.findElement(By.id("ui-id-3"));
 
 			List<WebElement> optionsCbo = autoOptionsCbo.findElements(By.tagName("a"));
 			for (WebElement optionToSelectCbo : optionsCbo) {
@@ -209,12 +212,12 @@ public class SulamericaBot {
 			}
 			driver.findElement(By.id("incluirIpe")).click();
 		}
-		
+	
 	}
 
-	@After
-	public void tearDown() {
-		// driver.close();
-	}
+//	@After
+//	public void tearDown() {
+//		 driver.close();
+//	}
 
 }
