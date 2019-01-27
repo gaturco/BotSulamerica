@@ -158,14 +158,14 @@ public class SulamericaBot {
 		int qtde = Integer.parseInt(quantidade);
 		for (int j = 0; j < qtde; j++) {
 			
-			datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
-					"Sulamerica", JOptionPane.PLAIN_MESSAGE));
-//			datas.add("07012019");
-//			datas.add("08012019");
-//			datas.add("09012019");
-//			datas.add("10012019");
-//			datas.add("11012019");
-//			datas.add("12012019");
+//			datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
+//					"Sulamerica", JOptionPane.PLAIN_MESSAGE));
+			datas.add("07012019");
+			datas.add("08012019");
+			datas.add("09012019");
+			datas.add("10012019");
+			datas.add("11012019");
+			datas.add("12012019");
 		}
 		
 		String adiciona;
