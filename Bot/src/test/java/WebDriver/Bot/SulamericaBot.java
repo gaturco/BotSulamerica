@@ -3,6 +3,8 @@ package WebDriver.Bot;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.TextListener;
@@ -76,14 +78,14 @@ public class SulamericaBot {
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Validar procedimento autorizado")));
 			driver.findElement(By.linkText("Validar procedimento autorizado")).click();
 
-			// PRENCHE CODIGO DO PACIENTE
-//			do { 
-//				
-//				codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
-//				"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-			//
-//			} while (codigo.length() != 20);
-			codigo = "54588888454738550019"; // codigo teste
+//			 PRENCHE CODIGO DO PACIENTE
+			do { 
+				
+				codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
+				"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+			
+			} while (codigo.length() != 20);
+//			codigo = "54588888454738550019";
 			String codigo1 = codigo.substring(0, 3);
 			String codigo2 = codigo.substring(3, 8);
 			String codigo3 = codigo.substring(8, 12);
@@ -148,17 +150,17 @@ public class SulamericaBot {
 			Select dropdownRn = new Select(driver.findElement(By.id("flag-atendimento-rn")));
 			dropdownRn.selectByVisibleText("Não");
 
-//			String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
-//			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-			String indicacao = "depressao"; // teste indicacao
+			String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
+			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+//			String indicacao = "depressao"; 
 			driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao.toUpperCase());
 
 			driver.findElement(By.name("pes.codigo-procedimento")).sendKeys("50000462");
 			driver.findElement(By.className("btn-busca-procedimento")).click();
 
-//			String quantidade = JOptionPane.showInputDialog(null, "Quantidade:",
-//					"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-			String quantidade = "6";
+			String quantidade = JOptionPane.showInputDialog(null, "Quantidade:",
+					"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+//			String quantidade = "6";
 			driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys(quantidade);
 			driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys(quantidade);
 			driver.findElement(By.id("incluiPes")).click();
@@ -178,14 +180,14 @@ public class SulamericaBot {
 			int qtde = Integer.parseInt(quantidade);
 			for (int j = 0; j < qtde; j++) {
 
-//				datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
-//						"Sulamerica", JOptionPane.PLAIN_MESSAGE));
-				datas.add("07012019");
-				datas.add("08012019");
-				datas.add("09012019");
-				datas.add("10012019");
-				datas.add("11012019");
-				datas.add("12012019");
+				datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
+						"Sulamerica", JOptionPane.PLAIN_MESSAGE));
+//				datas.add("07012019");
+//				datas.add("08012019");
+//				datas.add("09012019");
+//				datas.add("10012019");
+//				datas.add("11012019");
+//				datas.add("12012019");
 			}
 
 			String adiciona;
@@ -247,13 +249,13 @@ public class SulamericaBot {
 			driver.findElement(By.linkText("Validar procedimento autorizado")).click();
 
 			// PRENCHE CODIGO DO PACIENTE
-// 			do { 
-// 				
-// 				codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
-// 				"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-			//
-// 			} while (codigo.length() != 20);
-			codigo = "54588888454738550019"; // codigo teste
+ 			do { 
+ 				
+ 				codigo = JOptionPane.showInputDialog(null, "Codigo do segurado: ",
+ 				"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+			
+ 			} while (codigo.length() != 20);
+//			codigo = "54588888454738550019";
 			String codigo1 = codigo.substring(0, 3);
 			String codigo2 = codigo.substring(3, 8);
 			String codigo3 = codigo.substring(8, 12);
@@ -318,17 +320,17 @@ public class SulamericaBot {
 			Select dropdownRn = new Select(driver.findElement(By.id("flag-atendimento-rn")));
 			dropdownRn.selectByVisibleText("Não");
 
-// 			String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
-// 			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-			String indicacao = "depressao"; // teste indicacao
+ 			String indicacao = JOptionPane.showInputDialog(null, "Transtorno:",
+ 			"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+//			String indicacao = "depressao"; 
 			driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao.toUpperCase());
 
 			driver.findElement(By.name("pes.codigo-procedimento")).sendKeys("50000462");
 			driver.findElement(By.className("btn-busca-procedimento")).click();
 
-// 			String quantidade = JOptionPane.showInputDialog(null, "Quantidade:",
-// 					"Sulamerica", JOptionPane.PLAIN_MESSAGE);
-			String quantidade = "6";
+ 			String quantidade = JOptionPane.showInputDialog(null, "Quantidade:",
+ 					"Sulamerica", JOptionPane.PLAIN_MESSAGE);
+//			String quantidade = "6";
 			driver.findElement(By.name("pes.quantidade-solicitada")).sendKeys(quantidade);
 			driver.findElement(By.name("pes.quantidade-autorizada")).sendKeys(quantidade);
 			driver.findElement(By.id("incluiPes")).click();
@@ -348,14 +350,14 @@ public class SulamericaBot {
 			int qtde = Integer.parseInt(quantidade);
 			for (int j = 0; j < qtde; j++) {
 
-// 				datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
-// 						"Sulamerica", JOptionPane.PLAIN_MESSAGE));
-				datas.add("07012019");
-				datas.add("08012019");
-				datas.add("09012019");
-				datas.add("10012019");
-				datas.add("11012019");
-				datas.add("12012019");
+ 				datas.add(JOptionPane.showInputDialog(null, "data "+(j+1)+":",
+ 						"Sulamerica", JOptionPane.PLAIN_MESSAGE));
+//				datas.add("07012019");
+//				datas.add("08012019");
+//				datas.add("09012019");
+//				datas.add("10012019");
+//				datas.add("11012019");
+//				datas.add("12012019");
 			}
 
 			String adiciona;
