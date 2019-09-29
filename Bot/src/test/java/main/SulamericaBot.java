@@ -1,4 +1,4 @@
-package WebDriver.Bot;
+package main;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,11 +9,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.internal.TextListener;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,37 +21,19 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.toedter.calendar.JDateChooser;
 
+import model.Usuario;
+
 public class SulamericaBot {
 
 	static WebDriver driver;
 
-	public static void main(String args[]) {
-		JUnitCore junit = new JUnitCore();
-		junit.addListener(new TextListener(System.out));
-		Result result = junit.run(SulamericaBot.class);
-
-		if (result.getFailureCount() > 0) {
-			System.out.println("Test failed.");
-			System.exit(1);
-		} else {
-			System.out.println("Test finished successfully.");
-			System.exit(0);
-		}
-	}
-
-	@Before
-	public void setUp() {
-		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-
-		driver = new ChromeDriver();
-
-	}
-
 	@Test
-	public void browser() throws Exception {
+	public static void browser(Usuario usuario) throws Exception {
 
-		String codigo = null;
-
+		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		
+		driver = new ChromeDriver();
+		
 		driver.manage().window().maximize();
 
 		int time = 10;
@@ -63,9 +41,9 @@ public class SulamericaBot {
 
 		// LOGAR
 		driver.get("https://saude.sulamericaseguros.com.br/prestador/login/");
-		driver.findElement(By.id("code")).sendKeys("00035000SPP0");
-		driver.findElement(By.id("user")).sendKeys("master");
-		driver.findElement(By.id("senha")).sendKeys("jan2705#");
+		driver.findElement(By.id("code")).sendKeys(usuario.getCodigoReferenciado());
+		driver.findElement(By.id("user")).sendKeys(usuario.getUsuario());
+		driver.findElement(By.id("senha")).sendKeys(usuario.getSenha());
 		driver.findElement(By.id("entrarLogin")).click();
 
 		try {
@@ -74,17 +52,19 @@ public class SulamericaBot {
 			driver.findElement(By.id("btnLayerFecharuserDialog")).click();
 			driver.findElement(By.className("img-responsive")).click();
 			
-			SulamericaBot.proc(codigo, wait);
+			SulamericaBot.proc(usuario, wait);
 
 			
 		} catch (Exception e) {
-			SulamericaBot.proc(codigo, wait);
+			SulamericaBot.proc(usuario, wait);
 		}
 
 	}
 
-	private static void proc(String codigo, WebDriverWait wait) throws InterruptedException, ParseException {
+	private static void proc(Usuario usuario, WebDriverWait wait) throws InterruptedException, ParseException {
 
+		String codigo = null;
+		
 		// ENTRA NA PAGINA DE FATURAMENTO
 		wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Serviços Médicos")));
 		driver.findElement(By.linkText("Serviços Médicos")).click();
@@ -136,15 +116,15 @@ public class SulamericaBot {
 
 		// PREENCHE A TELA DO REFERENCIADO
 		driver.findElement(By.id("numero-guia-principal")).sendKeys(autorizacao);
-		driver.findElement(By.id("numero-profissional-operadora")).sendKeys("00035000SPP0");
-		driver.findElement(By.id("nome-contratado-solicitante")).sendKeys("JANETE ESPOSITO");
-		driver.findElement(By.name("guia-sadt.profissional-solicitante.nome")).sendKeys("JANETE ESPOSITO");
+		driver.findElement(By.id("numero-profissional-operadora")).sendKeys(usuario.getCodigoReferenciado());
+		driver.findElement(By.id("nome-contratado-solicitante")).sendKeys(usuario.getNomeSolicitante());
+		driver.findElement(By.name("guia-sadt.profissional-solicitante.nome")).sendKeys(usuario.getNomeSolicitante());
 		Select dropdownConselho = new Select(driver.findElement(By.id("conselho-profissional")));
 		dropdownConselho.selectByVisibleText("CRP");
 		Select dropdownUf = new Select(driver.findElement(By.id("uf-conselho-profissional")));
 		dropdownUf.selectByVisibleText("SP");
-		driver.findElement(By.id("numero-registro-conselho")).sendKeys("350003");
-		driver.findElement(By.id("cbo")).sendKeys("251510");
+		driver.findElement(By.id("numero-registro-conselho")).sendKeys(usuario.getNumeroConselho());
+		driver.findElement(By.id("cbo")).sendKeys(usuario.getCodigoCbo());
 		Thread.sleep(3000);
 		WebElement autoOptions = driver.findElement(By.id("ui-id-1"));
 
@@ -170,7 +150,7 @@ public class SulamericaBot {
 //		String indicacao = "depressao"; 
 		driver.findElement(By.id("indicacao-clinica")).sendKeys(indicacao.toUpperCase());
 
-		driver.findElement(By.name("pes.codigo-procedimento")).sendKeys("50000462");
+		driver.findElement(By.name("pes.codigo-procedimento")).sendKeys(usuario.getCodigoProcedimento());
 		driver.findElement(By.className("btn-busca-procedimento")).click();
 
 		String quantidade = JOptionPane.showInputDialog(null, "Quantidade:", "Sulamerica", JOptionPane.PLAIN_MESSAGE);
@@ -228,7 +208,6 @@ public class SulamericaBot {
 		}
 
 		String adiciona;
-		String valorConsulta = JOptionPane.showInputDialog(null, "Digite o valor da consulta (R$): ", "Sulamerica", JOptionPane.PLAIN_MESSAGE);
 
 		for (int i = 0; i < qtde; i++) {
 			driver.findElement(By.name("per.data")).sendKeys(datas.get(i));
@@ -236,7 +215,7 @@ public class SulamericaBot {
 					.sendKeys("50000462");
 			driver.findElement(By.xpath("//*[@id=\"formPer\"]/fieldset/div[4]/div[1]/div[2]/a")).click();
 			driver.findElement(By.name("per.quantidade")).sendKeys("1");
-			driver.findElement(By.name("per.valor-unitario")).sendKeys(valorConsulta);
+			driver.findElement(By.name("per.valor-unitario")).sendKeys(usuario.getValorConsulta());
 			Thread.sleep(500);
 			wait.until(ExpectedConditions.elementToBeClickable(By.id("incluirPer")));
 			driver.findElement(By.id("incluirPer")).click();
@@ -255,14 +234,14 @@ public class SulamericaBot {
 			dropdownGrauPart.selectByVisibleText("Clínico");
 			Select dropdownTipoDoc = new Select(driver.findElement(By.name("ipe.tipo-documento")));
 			dropdownTipoDoc.selectByVisibleText("Código na Operadora");
-			driver.findElement(By.name("ipe.numero-documento")).sendKeys("00035000SPP0");
-			driver.findElement(By.name("ipe.nome-profissional")).sendKeys("JANETE ESPOSITO");
+			driver.findElement(By.name("ipe.numero-documento")).sendKeys(usuario.getCodigoReferenciado());
+			driver.findElement(By.name("ipe.nome-profissional")).sendKeys(usuario.getNomeSolicitante());
 			Select dropdownUF = new Select(driver.findElement(By.name("ipe.uf-conselho")));
 			dropdownUF.selectByVisibleText("SP");
 			Select dropdownConselhoProfissional = new Select(driver.findElement(By.name("ipe.conselho-profissional")));
 			dropdownConselhoProfissional.selectByVisibleText("CRP");
-			driver.findElement(By.name("ipe.numero-conselho")).sendKeys("350003");
-			driver.findElement(By.name("ipe.busca-codigo-cbo")).sendKeys("251510");
+			driver.findElement(By.name("ipe.numero-conselho")).sendKeys(usuario.getNumeroConselho());
+			driver.findElement(By.name("ipe.busca-codigo-cbo")).sendKeys(usuario.getCodigoCbo());
 			Thread.sleep(3000);
 			WebElement autoOptionsCbo = driver.findElement(By.id("ui-id-3"));
 
