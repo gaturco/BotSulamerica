@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.toedter.calendar.JDateChooser;
 
-import model.Usuario;
+import model.entities.Usuario;
 
 public class SulamericaBot {
 

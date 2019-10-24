@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import main.SulamericaBot;
-import model.Usuario;
+import model.entities.Usuario;
 
 public class View extends JFrame {
 	private static final long serialVersionUID = 1L;
