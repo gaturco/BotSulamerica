@@ -4,9 +4,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,9 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import db.DB;
 import main.SulamericaBot;
 import model.Usuario;
+import model.entities.Paciente;
+import model.entities.Transtorno;
 
 public class View extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -27,28 +25,11 @@ public class View extends JFrame {
 
 	public static void main(String[] args) throws IOException {
 		
-//		Connection conn = null;
-//		PreparedStatement st = null;
-//		try {
-//			
-//			conn = DB.getConnection();
-//			st = conn.prepareStatement(
-//					"DELETE FROM pacientes "
-//					+ "WHERE "
-//					+ "nome_paciente = ?"
-//					);
-//			
-//			st.setString(1, "TESTE TESTE2");
-//			
-//			int rows = st.executeUpdate();
-//			
-//			System.out.println("Done! Rows affected: " + rows);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			DB.closeStatement(st);
-//			DB.closeConnection();
-//		}
+		Transtorno t = new Transtorno("F41", "DEPRESSAO");
+		
+		Paciente p = new Paciente("00000000000000000000", "teste", t);
+		
+		System.out.println(p);
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
