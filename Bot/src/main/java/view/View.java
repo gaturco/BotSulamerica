@@ -15,8 +15,6 @@ import javax.swing.border.EmptyBorder;
 
 import main.SulamericaBot;
 import model.Usuario;
-import model.entities.Paciente;
-import model.entities.Transtorno;
 
 public class View extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -25,11 +23,6 @@ public class View extends JFrame {
 
 	public static void main(String[] args) throws IOException {
 		
-		Transtorno t = new Transtorno("F41", "DEPRESSAO");
-		
-		Paciente p = new Paciente("00000000000000000000", "teste", t);
-		
-		System.out.println(p);
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
