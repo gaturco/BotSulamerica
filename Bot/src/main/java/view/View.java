@@ -27,7 +27,8 @@ public class View extends JFrame {
 	public static void main(String[] args) throws IOException {
 		
 		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
-		Paciente paciente = pacienteDAO.findById(1);
+		System.out.println("==== TEST 1: paciente findById ====");
+		Paciente paciente = pacienteDAO.findById(2);
 		
 		System.out.println(paciente);
 		

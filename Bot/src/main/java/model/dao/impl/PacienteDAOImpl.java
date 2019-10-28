@@ -56,15 +56,9 @@ public class PacienteDAOImpl implements PacienteDAO {
 			rs = st.executeQuery();
 			
 			if (rs.next()) {
-				Transtorno transtorno = new Transtorno();
-				transtorno.setCodigo(rs.getString("cod_transtorno"));
-				transtorno.setNome(rs.getString("transtorno"));
+				Transtorno transtorno = instantiateTranstorno(rs);
 				
-				Paciente paciente = new Paciente();
-				paciente.setCodigo(rs.getString("cod_paciente"));
-				paciente.setId(rs.getInt("id"));
-				paciente.setNome(rs.getString("nome_paciente"));
-				paciente.setTranstorno(transtorno);
+				Paciente paciente = instantiatePaciente(rs, transtorno);
 				
 				return paciente;
 			}
@@ -76,6 +70,22 @@ public class PacienteDAOImpl implements PacienteDAO {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
+	}
+
+	private Paciente instantiatePaciente(ResultSet rs, Transtorno transtorno) throws SQLException {
+		Paciente paciente = new Paciente();
+		paciente.setCodigo(rs.getString("cod_paciente"));
+		paciente.setId(rs.getInt("id"));
+		paciente.setNome(rs.getString("nome_paciente"));
+		paciente.setTranstorno(transtorno);
+		return paciente;
+	}
+
+	private Transtorno instantiateTranstorno(ResultSet rs) throws SQLException {
+		Transtorno transtorno = new Transtorno();
+		transtorno.setCodigo(rs.getString("cod_transtorno"));
+		transtorno.setNome(rs.getString("transtorno"));
+		return transtorno;
 	}
 
 	@Override
