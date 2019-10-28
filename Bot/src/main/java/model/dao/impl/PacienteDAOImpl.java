@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,39 @@ public class PacienteDAOImpl implements PacienteDAO {
 
 	@Override
 	public void insert(Paciente paciente) {
-		// TODO Auto-generated method stub
-
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement(
+					"insert into pacientes "
+					+ "(cod_paciente, nome_paciente, cod_transtorno) "
+					+ "values "
+					+ "(?, ?, ?)", 
+					Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1, paciente.getCodigo());
+			st.setString(2, paciente .getNome());
+			st.setString(3, paciente.getTranstorno().getCodigo());
+			
+			int rowsAffected = st.executeUpdate();
+			
+			if (rowsAffected > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					paciente.setId(id);
+				}
+				
+				DB.closeResultSet(rs);
+			} else {
+				throw new DbException("Erro inesperado! Nenhuma linha foi afeteada!");
+			}
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override

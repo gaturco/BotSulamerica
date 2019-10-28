@@ -18,6 +18,7 @@ import main.SulamericaBot;
 import model.dao.DAOFactory;
 import model.dao.PacienteDAO;
 import model.entities.Paciente;
+import model.entities.Transtorno;
 import model.entities.Usuario;
 
 public class View extends JFrame {
@@ -38,6 +39,11 @@ public class View extends JFrame {
 		for (Paciente obj : list) {
 			System.out.println(obj);
 		}
+		
+		System.out.println("\n==== TEST 3: paciente insert ====");
+		Paciente newPaciente = new Paciente(null, "00000000000000000000", "teste", new Transtorno("F32", "DEPRESSAO", null));
+		pacienteDAO.insert(newPaciente);
+		System.out.println("Inserido! New id = " + newPaciente.getId()); 
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
