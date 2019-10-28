@@ -14,6 +14,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import main.SulamericaBot;
+import model.dao.DAOFactory;
+import model.dao.PacienteDAO;
+import model.entities.Paciente;
 import model.entities.Usuario;
 
 public class View extends JFrame {
@@ -23,6 +26,10 @@ public class View extends JFrame {
 
 	public static void main(String[] args) throws IOException {
 		
+		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
+		Paciente paciente = pacienteDAO.findById(1);
+		
+		System.out.println(paciente);
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
