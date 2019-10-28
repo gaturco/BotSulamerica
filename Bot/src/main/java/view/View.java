@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,10 +28,16 @@ public class View extends JFrame {
 	public static void main(String[] args) throws IOException {
 		
 		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
+		
 		System.out.println("==== TEST 1: paciente findById ====");
 		Paciente paciente = pacienteDAO.findById(2);
-		
 		System.out.println(paciente);
+		
+		System.out.println("\n==== TEST 2: paciente findAll ====");
+		List<Paciente> list = pacienteDAO.findAll();
+		for (Paciente obj : list) {
+			System.out.println(obj);
+		}
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
