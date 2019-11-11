@@ -23,8 +23,8 @@ public class Usuario {
 	public Usuario() {
 	}
 	
-	public Usuario(String codigoReferenciado, String usuario, String senha, String nomeSolicitante,
-			String numeroConselho, String codigoCbo, String codigoProcedimento, String valorConsulta, Integer id) {
+	public Usuario(Integer id, String codigoReferenciado, String usuario, String senha, String nomeSolicitante,
+			String numeroConselho, String codigoCbo, String codigoProcedimento, String valorConsulta) {
 		this.codigoReferenciado = codigoReferenciado;
 		this.usuario = usuario;
 		this.senha = senha;

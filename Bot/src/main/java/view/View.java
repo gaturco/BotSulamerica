@@ -4,7 +4,6 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,9 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import main.SulamericaBot;
 import model.dao.DAOFactory;
-import model.dao.PacienteDAO;
-import model.entities.Paciente;
-import model.entities.Transtorno;
+import model.dao.UsuarioDAO;
 import model.entities.Usuario;
 
 public class View extends JFrame {
@@ -28,17 +25,17 @@ public class View extends JFrame {
 
 	public static void main(String[] args) throws IOException {
 		
-		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
-		
-		System.out.println("==== TEST 1: paciente findById ====");
-		Paciente paciente = pacienteDAO.findById(2);
-		System.out.println(paciente);
-		
-		System.out.println("\n==== TEST 2: paciente findAll ====");
-		List<Paciente> list = pacienteDAO.findAll();
-		for (Paciente obj : list) {
-			System.out.println(obj);
-		}
+//		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
+//		
+//		System.out.println("==== TEST 1: paciente findById ====");
+//		Paciente paciente = pacienteDAO.findById(2);
+//		System.out.println(paciente);
+//		
+//		System.out.println("\n==== TEST 2: paciente findAll ====");
+//		List<Paciente> list = pacienteDAO.findAll();
+//		for (Paciente obj : list) {
+//			System.out.println(obj);
+//		}
 		
 //		System.out.println("\n==== TEST 3: paciente insert ====");
 //		Paciente newPaciente = new Paciente(null, "00000000000000000000", "teste", new Transtorno("F32", "DEPRESSAO", null));
@@ -51,9 +48,16 @@ public class View extends JFrame {
 //		pacienteDAO.update(paciente);
 //		System.out.println("Update realizado com sucesso!"); 
 		
-		System.out.println("\n==== TEST 5: paciente delete ====");
-		pacienteDAO.deleteById(5);
-		System.out.println("Paciente deletado com sucesso!"); 
+//		System.out.println("\n==== TEST 5: paciente delete ====");
+//		pacienteDAO.deleteById(5);
+//		System.out.println("Paciente deletado com sucesso!");
+		
+		UsuarioDAO usuarioDAO = DAOFactory.createUsuarioDAO();
+		
+		System.out.println("\n==== TEST 1: usuario insert ====");
+		Usuario newUsuario = new Usuario(null, "000000000000", "teste", "jan2705#", "TESTE", "111111", "222222", "33333333", "10,99");
+		usuarioDAO.insert(newUsuario);
+		System.out.println("Novo usuário inserido! Id = " + newUsuario.getId());
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
