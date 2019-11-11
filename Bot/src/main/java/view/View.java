@@ -40,10 +40,16 @@ public class View extends JFrame {
 			System.out.println(obj);
 		}
 		
-		System.out.println("\n==== TEST 3: paciente insert ====");
-		Paciente newPaciente = new Paciente(null, "00000000000000000000", "teste", new Transtorno("F32", "DEPRESSAO", null));
-		pacienteDAO.insert(newPaciente);
-		System.out.println("Inserido! New id = " + newPaciente.getId()); 
+//		System.out.println("\n==== TEST 3: paciente insert ====");
+//		Paciente newPaciente = new Paciente(null, "00000000000000000000", "teste", new Transtorno("F32", "DEPRESSAO", null));
+//		pacienteDAO.insert(newPaciente);
+//		System.out.println("Inserido! New id = " + newPaciente.getId()); 
+		
+		System.out.println("\n==== TEST 4: paciente update ====");
+		paciente = pacienteDAO.findById(4);
+		paciente.setNome("teste2");
+		pacienteDAO.update(paciente);
+		System.out.println("Update realizado com sucesso!"); 
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");

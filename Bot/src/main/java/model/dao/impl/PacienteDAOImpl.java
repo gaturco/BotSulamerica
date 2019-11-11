@@ -63,7 +63,26 @@ public class PacienteDAOImpl implements PacienteDAO {
 
 	@Override
 	public void update(Paciente paciente) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement(
+					"update pacientes "
+					+ "set cod_paciente = ?, nome_paciente = ?, cod_transtorno = ? "
+					+ "where id = ? ");
+			
+			st.setString(1, paciente.getCodigo());
+			st.setString(2, paciente .getNome());
+			st.setString(3, paciente.getTranstorno().getCodigo());
+			st.setInt(4, paciente.getId());
+			
+			st.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
