@@ -45,11 +45,15 @@ public class View extends JFrame {
 //		pacienteDAO.insert(newPaciente);
 //		System.out.println("Inserido! New id = " + newPaciente.getId()); 
 		
-		System.out.println("\n==== TEST 4: paciente update ====");
-		paciente = pacienteDAO.findById(4);
-		paciente.setNome("teste2");
-		pacienteDAO.update(paciente);
-		System.out.println("Update realizado com sucesso!"); 
+//		System.out.println("\n==== TEST 4: paciente update ====");
+//		paciente = pacienteDAO.findById(4);
+//		paciente.setNome("teste2");
+//		pacienteDAO.update(paciente);
+//		System.out.println("Update realizado com sucesso!"); 
+		
+		System.out.println("\n==== TEST 5: paciente delete ====");
+		pacienteDAO.deleteById(5);
+		System.out.println("Paciente deletado com sucesso!"); 
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
