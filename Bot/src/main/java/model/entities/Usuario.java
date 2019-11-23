@@ -1,5 +1,7 @@
 package model.entities;
 
+import java.util.Date;
+
 public class Usuario {
 	
 	private String codigoReferenciado;
@@ -19,12 +21,14 @@ public class Usuario {
 	private String valorConsulta;
 	
 	private Integer id;
+	
+	private Date dataInsercao;
 
 	public Usuario() {
 	}
 	
 	public Usuario(Integer id, String codigoReferenciado, String usuario, String senha, String nomeSolicitante,
-			String numeroConselho, String codigoCbo, String codigoProcedimento, String valorConsulta) {
+			String numeroConselho, String codigoCbo, String codigoProcedimento, String valorConsulta, Date dataInsercao) {
 		this.codigoReferenciado = codigoReferenciado;
 		this.usuario = usuario;
 		this.senha = senha;
@@ -34,6 +38,7 @@ public class Usuario {
 		this.codigoProcedimento = codigoProcedimento;
 		this.valorConsulta = valorConsulta;
 		this.id = id;
+		this.dataInsercao= dataInsercao;
 	}
 
 	public String getCodigoReferenciado() {
@@ -106,6 +111,14 @@ public class Usuario {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Date getDataInsercao() {
+		return dataInsercao;
+	}
+
+	public void setDataInsercao(Date dataInsercao) {
+		this.dataInsercao = dataInsercao;
 	}
 
 	@Override

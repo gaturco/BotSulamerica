@@ -116,7 +116,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 
 		try {
 			st = conn.prepareStatement(
-					"select pacientes.*, transtornos.transtorno " + "from pacientes inner join transtornos "
+					"select pacientes.*, transtornos.nome, transtornos.id_transtorno " + "from pacientes inner join transtornos "
 							+ "on pacientes.cod_transtorno = transtornos.cod_transtorno " + "where pacientes.id = ?");
 
 			st.setInt(1, id);
@@ -152,7 +152,8 @@ public class PacienteDAOImpl implements PacienteDAO {
 	private Transtorno instantiateTranstorno(ResultSet rs) throws SQLException {
 		Transtorno transtorno = new Transtorno();
 		transtorno.setCodigo(rs.getString("cod_transtorno"));
-		transtorno.setNome(rs.getString("transtorno"));
+		transtorno.setNome(rs.getString("nome"));
+		transtorno.setId(rs.getInt("id_transtorno"));
 		return transtorno;
 	}
 
@@ -163,7 +164,7 @@ public class PacienteDAOImpl implements PacienteDAO {
 
 		try {
 			st = conn.prepareStatement(
-					"select pacientes.*, transtornos.transtorno " + "from pacientes inner join transtornos "
+					"select pacientes.*, transtornos.nome , transtornos.id_transtorno " + "from pacientes inner join transtornos "
 							+ "on pacientes.cod_transtorno = transtornos.cod_transtorno " + "order by nome_paciente");
 
 			rs = st.executeQuery();
