@@ -15,6 +15,7 @@ import db.DbException;
 import model.dao.PacienteDAO;
 import model.entities.Paciente;
 import model.entities.Transtorno;
+import model.mapper.EntitiesMapper;
 
 public class PacienteDAOImpl implements PacienteDAO {
 
@@ -124,9 +125,9 @@ public class PacienteDAOImpl implements PacienteDAO {
 			rs = st.executeQuery();
 
 			if (rs.next()) {
-				Transtorno transtorno = instantiateTranstorno(rs);
+				Transtorno transtorno = EntitiesMapper.instantiateTranstorno(rs);
 
-				Paciente paciente = instantiatePaciente(rs, transtorno);
+				Paciente paciente = EntitiesMapper.instantiatePaciente(rs, transtorno);
 
 				return paciente;
 			}
@@ -138,23 +139,6 @@ public class PacienteDAOImpl implements PacienteDAO {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
-	}
-
-	private Paciente instantiatePaciente(ResultSet rs, Transtorno transtorno) throws SQLException {
-		Paciente paciente = new Paciente();
-		paciente.setCodigo(rs.getString("cod_paciente"));
-		paciente.setId(rs.getInt("id"));
-		paciente.setNome(rs.getString("nome_paciente"));
-		paciente.setTranstorno(transtorno);
-		return paciente;
-	}
-
-	private Transtorno instantiateTranstorno(ResultSet rs) throws SQLException {
-		Transtorno transtorno = new Transtorno();
-		transtorno.setCodigo(rs.getString("cod_transtorno"));
-		transtorno.setNome(rs.getString("nome"));
-		transtorno.setId(rs.getInt("id_transtorno"));
-		return transtorno;
 	}
 
 	@Override
@@ -176,11 +160,11 @@ public class PacienteDAOImpl implements PacienteDAO {
 				Transtorno transtorno = map.get(rs.getString("cod_transtorno"));
 				
 				if(transtorno == null) {
-					transtorno = instantiateTranstorno(rs);
+					transtorno = EntitiesMapper.instantiateTranstorno(rs);
 					map.put(rs.getString("cod_transtorno"), transtorno);
 				}
 				
-				Paciente paciente = instantiatePaciente(rs, transtorno);
+				Paciente paciente = EntitiesMapper.instantiatePaciente(rs, transtorno);
 				list.add(paciente);
 			}
 

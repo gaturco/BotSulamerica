@@ -151,6 +151,6 @@ public class Usuario {
 		return "Usuario [codigoReferenciado=" + codigoReferenciado + ", usuario=" + usuario + ", senha=" + senha
 				+ ", nomeSolicitante=" + nomeSolicitante + ", numeroConselho=" + numeroConselho + ", codigoCbo="
 				+ codigoCbo + ", codigoProcedimento=" + codigoProcedimento + ", valorConsulta=" + valorConsulta
-				+ ", id=" + id + "]";
+				+ ", id=" + id + ", dataInsercao=" + dataInsercao + "]";
 	}
 }

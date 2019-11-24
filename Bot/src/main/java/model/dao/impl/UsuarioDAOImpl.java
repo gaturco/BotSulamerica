@@ -12,6 +12,7 @@ import db.DB;
 import db.DbException;
 import model.dao.UsuarioDAO;
 import model.entities.Usuario;
+import model.mapper.EntitiesMapper;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
@@ -128,7 +129,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			rs = st.executeQuery();
 
 			if (rs.next()) {
-				Usuario usuario = instantiateUsuario(rs);
+				Usuario usuario = EntitiesMapper.instantiateUsuario(rs);
 				
 				return usuario;
 			}
@@ -156,7 +157,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 			while (rs.next()) {
 				
-				Usuario usuario = instantiateUsuario(rs);
+				Usuario usuario = EntitiesMapper.instantiateUsuario(rs);
 				list.add(usuario);
 			}
 
@@ -167,22 +168,5 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
-	}
-	
-	private Usuario instantiateUsuario(ResultSet rs) throws SQLException {
-		
-		Usuario usuario = new Usuario();
-		usuario.setCodigoCbo(rs.getString("cod_cbo"));
-		usuario.setCodigoProcedimento(rs.getString("cod_procedimento"));
-		usuario.setCodigoReferenciado(rs.getString("cod_referenciado"));
-		usuario.setId(rs.getInt("id"));
-		usuario.setNomeSolicitante(rs.getString("nome_solicitante"));
-		usuario.setNumeroConselho(rs.getString("numero_conselho"));
-		usuario.setSenha(rs.getString("senha"));
-		usuario.setUsuario(rs.getString("usuario"));
-		usuario.setValorConsulta(rs.getString("valor_consulta"));
-		usuario.setDataInsercao(rs.getDate("data_insercao"));
-		
-		return usuario;
 	}
 }

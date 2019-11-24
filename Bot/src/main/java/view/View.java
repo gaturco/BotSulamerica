@@ -16,8 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import main.SulamericaBot;
 import model.dao.DAOFactory;
-import model.dao.PacienteDAO;
-import model.entities.Paciente;
+import model.dao.UsuarioDAO;
 import model.entities.Usuario;
 
 public class View extends JFrame {
@@ -27,17 +26,17 @@ public class View extends JFrame {
 
 	public static void main(String[] args) throws IOException {
 		
-		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
-		
-		System.out.println("==== TEST 1: paciente findById ====");
-		Paciente paciente = pacienteDAO.findById(2);
-		System.out.println(paciente);
-		
-		System.out.println("\n==== TEST 2: paciente findAll ====");
-		List<Paciente> list = pacienteDAO.findAll();
-		for (Paciente obj : list) {
-			System.out.println(obj);
-		}
+//		PacienteDAO pacienteDAO = DAOFactory.createPacienteDAO();
+//		
+//		System.out.println("==== TEST 1: paciente findById ====");
+//		Paciente paciente = pacienteDAO.findById(2);
+//		System.out.println(paciente);
+//		
+//		System.out.println("\n==== TEST 2: paciente findAll ====");
+//		List<Paciente> list = pacienteDAO.findAll();
+//		for (Paciente obj : list) {
+//			System.out.println(obj);
+//		}
 		
 //		System.out.println("\n==== TEST 3: paciente insert ====");
 //		Paciente newPaciente = new Paciente(null, "00000000000000000000", "teste", new Transtorno("F32", "DEPRESSAO", null));
@@ -54,10 +53,10 @@ public class View extends JFrame {
 //		pacienteDAO.deleteById(5);
 //		System.out.println("Paciente deletado com sucesso!");
 		
-//		UsuarioDAO usuarioDAO = DAOFactory.createUsuarioDAO();
+		UsuarioDAO usuarioDAO = DAOFactory.createUsuarioDAO();
 		
 //		System.out.println("\n==== TEST 1: usuario insert ====");
-//		Usuario newUsuario = new Usuario(null, "000000000000", "teste", "jan2705#", "TESTE", "111111", "222222", "33333333", "10,99");
+//		Usuario newUsuario = new Usuario(null, "000000000000", "teste", "jan2705#", "TESTE", "111111", "222222", "33333333", "10,99", null);
 //		usuarioDAO.insert(newUsuario);
 //		System.out.println("Novo usuário inserido! Id = " + newUsuario.getId());
 		
@@ -68,18 +67,50 @@ public class View extends JFrame {
 //		System.out.println("Update realizado com sucesso!");
 		
 //		System.out.println("\n==== TEST 5: usuario delete ====");
-//		usuarioDAO.deleteById(6);
+//		usuarioDAO.deleteById(2);
+//		usuarioDAO.deleteById(3);
+//		usuarioDAO.deleteById(4);
+//		usuarioDAO.deleteById(7);
 //		System.out.println("Usuario deletado com sucesso!");
 		
-//		System.out.println("==== TEST 1: paciente findById ====");
-//		Usuario usuario2 = usuarioDAO.findById(2);
-//		System.out.println(usuario2);
+		System.out.println("==== TEST 1: paciente findById ====");
+		Usuario usuario2 = usuarioDAO.findById(1);
+		System.out.println(usuario2);
+		
+		System.out.println("\n==== TEST 2: paciente findAll ====");
+		List<Usuario> list = usuarioDAO.findAll();
+		for (Usuario obj : list) {
+			System.out.println(obj);
+		}
+		
+//		TranstornoDAO transtornoDAO = DAOFactory.createTranstornoDAO();
+//		System.out.println("\n==== TEST 3: transtorno insert ====");
+//		Transtorno newTranstorno = new Transtorno("F35", "TESTE", null);
+//		transtornoDAO.insert(newTranstorno);
+//		System.out.println("Inserido! New id = " + newTranstorno.getId()); 
+		
+//		System.out.println("==== TEST 1: transtorno findById ====");
+//		Transtorno transtorno = transtornoDAO.findById(2);
+//		System.out.println(transtorno);
 //		
-//		System.out.println("\n==== TEST 2: paciente findAll ====");
-//		List<Usuario> list = usuarioDAO.findAll();
-//		for (Usuario obj : list) {
+//		System.out.println("\n==== TEST 4: transtorno update ====");
+//		transtorno = transtornoDAO.findById(4);
+//		transtorno.setNome("teste4");
+//		transtornoDAO.update(transtorno);
+//		System.out.println("Update realizado com sucesso!"); 
+//		
+//		System.out.println("\n==== TEST 2: transtorno findAll ====");
+//		List<Transtorno> list = transtornoDAO.findAll();
+//		for (Transtorno obj : list) {
 //			System.out.println(obj);
 //		}
+//		
+//		System.out.println("\n==== TEST 2: transtorno delete ====");
+//		transtornoDAO.deleteById(4);
+//		System.out.println("Transtorno deletado com sucesso!");
+		
+		
+		
 		
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
