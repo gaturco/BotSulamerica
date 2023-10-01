@@ -169,14 +169,20 @@ public class SulamericaBot {
 		
 		//driver.findElement(By.id("numero-profissional-operadora")).sendKeys(usuario.getCodigoReferenciado());
 		//driver.findElement(By.id("nome-contratado-solicitante")).sendKeys(usuario.getNomeSolicitante());
-		String profissionalSolicitante = JOptionPane.showInputDialog(null, "Nome do profissional solicitante: ", "Sulamerica", JOptionPane.PLAIN_MESSAGE);
-		driver.findElement(By.name("guia-sadt.profissional-solicitante.nome")).sendKeys(profissionalSolicitante);
+		
+		//INPUT PARA COLOCAR NOME DO PSICOLOGO
+		//String profissionalSolicitante = JOptionPane.showInputDialog(null, "Nome do profissional solicitante: ", "Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		//driver.findElement(By.name("guia-sadt.profissional-solicitante.nome")).sendKeys(profissionalSolicitante);
+		driver.findElement(By.name("guia-sadt.profissional-solicitante.nome")).sendKeys(usuario.getNomeSolicitante());
 		Select dropdownConselho = new Select(driver.findElement(By.id("conselho-profissional")));
 		dropdownConselho.selectByVisibleText("CRP");
 		Select dropdownUf = new Select(driver.findElement(By.id("uf-conselho-profissional")));
 		dropdownUf.selectByVisibleText("SP");
-		String numeroConselho = JOptionPane.showInputDialog(null, "Número do conselho: ", "Sulamerica", JOptionPane.PLAIN_MESSAGE);
-		driver.findElement(By.id("numero-registro-conselho")).sendKeys(numeroConselho);
+		
+		//INPUT PARA COLOCAR NUMERO DO CRP
+		//String numeroConselho = JOptionPane.showInputDialog(null, "Número do conselho: ", "Sulamerica", JOptionPane.PLAIN_MESSAGE);
+		//driver.findElement(By.id("numero-registro-conselho")).sendKeys(numeroConselho);
+		driver.findElement(By.id("numero-registro-conselho")).sendKeys(usuario.getNumeroConselho());
 		driver.findElement(By.id("cbo")).sendKeys(usuario.getCodigoCbo());
 		Thread.sleep(3000);
 		WebElement autoOptions = driver.findElement(By.id("ui-id-1"));
@@ -294,12 +300,12 @@ public class SulamericaBot {
 			Select dropdownTipoDoc = new Select(driver.findElement(By.name("ipe.tipo-documento")));
 			dropdownTipoDoc.selectByVisibleText("Código na Operadora");
 			driver.findElement(By.name("ipe.numero-documento")).sendKeys(usuario.getCodigoReferenciado());
-			driver.findElement(By.name("ipe.nome-profissional")).sendKeys(profissionalSolicitante);
+			driver.findElement(By.name("ipe.nome-profissional")).sendKeys(usuario.getNomeSolicitante());
 			Select dropdownUF = new Select(driver.findElement(By.name("ipe.uf-conselho")));
 			dropdownUF.selectByVisibleText("SP");
 			Select dropdownConselhoProfissional = new Select(driver.findElement(By.name("ipe.conselho-profissional")));
 			dropdownConselhoProfissional.selectByVisibleText("CRP");
-			driver.findElement(By.name("ipe.numero-conselho")).sendKeys(numeroConselho);
+			driver.findElement(By.name("ipe.numero-conselho")).sendKeys(usuario.getNumeroConselho());
 			driver.findElement(By.name("ipe.busca-codigo-cbo")).sendKeys(usuario.getCodigoCbo());
 			Thread.sleep(3000);
 			WebElement autoOptionsCbo = driver.findElement(By.id("ui-id-4"));
