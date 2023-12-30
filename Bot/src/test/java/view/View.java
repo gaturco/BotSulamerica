@@ -27,8 +27,8 @@ public class View extends JFrame {
 		Usuario usuario = new Usuario();
 		usuario.setCodigoCbo("251510");
 		usuario.setCodigoProcedimento("50000470");
-		usuario.setCodigoReferenciado("00035000SPP0");
-		usuario.setNomeSolicitante("JANETE ESPOSITO");
+		usuario.setCodigoReferenciado("100000021876");
+		usuario.setNomeSolicitante("INTUITIVA MENTE");
 		usuario.setNumeroConselho("350003");
 		usuario.setSenha("jan2705#");
 		usuario.setUsuario("master");
